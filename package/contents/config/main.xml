@@ -14,10 +14,10 @@
             <default>true</default>
         </entry>
         <entry name="showNumbers" type="Bool">
-            <default>true</default>
+            <default>false</default>
         </entry>
         <entry name="showLabels" type="Bool">
-            <default>true</default>
+            <default>false</default>
         </entry>
         
         <entry name="enableSeconds" type="Bool">
