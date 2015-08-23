@@ -26,9 +26,14 @@ Item {
     
     property bool vertical: (plasmoid.formFactor == PlasmaCore.Types.Vertical)
     
-    property bool fullCirclesSetting: plasmoid.configuration.fullCircles
     property bool squareLayout: plasmoid.configuration.squareLayout
+    
+    property bool fullCirclesSetting: plasmoid.configuration.fullCircles
     property bool showLabels: plasmoid.configuration.showLabels
+    property bool showNumbers: plasmoid.configuration.showNumbers
+    
+    property bool enableSeconds: plasmoid.configuration.enableSeconds
+    property bool showSecondsNumber: plasmoid.configuration.showSecondsNumber
     
     property double secondsValue: 0
     

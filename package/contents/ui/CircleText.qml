@@ -16,17 +16,24 @@
  */
 import QtQuick 2.2
 import QtQuick.Layouts 1.1
+import QtGraphicalEffects 1.0
 
 Item {
     
     property double proportion
+    
     property string valueLabel
-    property string value
-    property bool isDays: false
+    property string numberValue
+    
+    property bool fullCircle
+    property bool showNumber
+    property bool showLabel
+    
     property double circleOpacity: 1
     
     property double stdThickness: partSize/2.1
-    property double circleThicknessAttr: fullCircles && !isDays ? 0 : stdThickness * 0.9
+    property double circleThicknessAttr: fullCircle ? 0 : stdThickness * 0.9
+    property double pi2: Math.PI * 2
     
     Layout.preferredWidth: partSize
     Layout.preferredHeight: partSize
@@ -35,6 +42,7 @@ Item {
     height: partSize
 
     onProportionChanged: {
+        print(valueLabel + ' proportion changed to: ' + proportion)
         repaint()
     }
     
@@ -50,46 +58,50 @@ Item {
         property bool stroke: true
         property real alpha: 1.0
 
-        // This fixes edge bleeding
+        // edge bleeding fix
         readonly property double filler: 0.01
 
         width: parent.width
         height: parent.height
         antialiasing: true
-        opacity: circleOpacity * ((fullCircles && mouseIn && !isDays) ? 0.5 : 1)
+        opacity: circleOpacity * (fullCircle && mouseIn ? 0.5 : 1)
 
         onPaint: {
             var ctx = getContext('2d')
-            ctx.save()
-            ctx.clearRect(0,0,canvas.width, canvas.height)
-            ctx.strokeStyle = theme.textColor
-            ctx.globalAlpha = canvas.alpha
-
-            // Start from 6 o'clock
-            var currentRadian = Math.PI/2
-
-            // Draw the sectors
-            var radians = proportion * 2 * Math.PI
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
             ctx.fillStyle = theme.highlightColor
+
+            var startRadian = - Math.PI / 2
+
+            var radians = pi2 * proportion
+            
             ctx.beginPath();
+            ctx.arc(width/2, height/2, stdThickness, startRadian, startRadian + radians + filler, false)
+            ctx.arc(width/2, height/2, circleThicknessAttr, startRadian + radians + filler, startRadian, true)
             
-            ctx.arc(width/2, height/2, stdThickness, currentRadian, currentRadian + radians + filler, false)
-            
-            ctx.arc(width/2, height/2, circleThicknessAttr, currentRadian + radians + filler, currentRadian, true)
-            
-            currentRadian += radians - filler
             ctx.closePath()
             ctx.fill()
-
         }
     }
     
     Text {
         id: valueText
         anchors.centerIn: parent
-        text: value
+        text: numberValue
         font.pointSize: fontPointSize
-        visible: !fullCircles || (fullCircles && mouseIn) || isDays
+        color: theme.textColor
+        visible: showNumber || mouseIn
+    }
+    
+    DropShadow {
+        anchors.fill: valueText
+        radius: 3
+        samples: 8
+        spread: 0.8
+        fast: true
+        color: theme.backgroundColor
+        source: valueText
+        visible: showNumber || mouseIn
     }
     
     Text {
@@ -99,6 +111,7 @@ Item {
         anchors.right: parent.right
         text: valueLabel
         font.pointSize: fontPointSize * 0.65
-        visible: showLabels || mouseIn
+        color: theme.textColor
+        visible: showLabel || mouseIn
     }
 }

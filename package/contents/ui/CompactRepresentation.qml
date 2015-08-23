@@ -24,22 +24,23 @@ Item {
 
     property bool fullCircles
     
-    property double ratio: squareLayout ? 1 : 4
-    property double itemWidth:  parent === null ? 0 : (vertical ? parent.width : parent.height) * ratio
-    property double itemHeight: itemWidth / ratio
+    property double numberOfParts: squareLayout ? 1 : enableSeconds ? 4 : 3
+    property double widgetWidth:  parent === null ? 0 : (vertical ? parent.width : parent.height * numberOfParts)
+    property double widgetHeight: widgetWidth / numberOfParts
     
-    property double partSize: squareLayout ? itemHeight / 2 : itemHeight
+    property double partSize: squareLayout ? widgetHeight / 2 : widgetHeight
     property double seconds
     
-    Layout.preferredWidth: itemWidth
-    Layout.preferredHeight: itemHeight
+    Layout.preferredWidth: widgetWidth
+    Layout.preferredHeight: widgetHeight
+    Layout.maximumHeight: widgetHeight
     
     property double fontPointSize: partSize * 0.4
     
     property bool mouseIn: false
     
     Component.onCompleted: {
-        print('uptime width: ' + itemWidth + ', height: '+ itemHeight + ', partSize: ' + partSize)
+        print('uptime width: ' + widgetWidth + ', height: '+ widgetHeight + ', partSize: ' + partSize)
     }
     
     onFullCirclesChanged: {
@@ -66,22 +67,22 @@ Item {
         }
         
         daysCircle.proportion = days / 7
-        daysCircle.value = days
+        daysCircle.numberValue = days
         
         hoursCircle.proportion = hours / 24
-        hoursCircle.value = hours
+        hoursCircle.numberValue = hours
         
         minsCircle.proportion = mins / 60
-        minsCircle.value = mins
+        minsCircle.numberValue = mins
         
         secsCircle.proportion = secs / 60
-        secsCircle.value = secs
+        secsCircle.numberValue = secs
     }
     
     GridLayout {
         
-        Layout.preferredWidth: itemWidth
-        Layout.preferredHeight: itemHeight
+        Layout.preferredWidth: widgetWidth
+        Layout.preferredHeight: widgetHeight
         
         columns: squareLayout ? 2 : 4
         columnSpacing: 0
@@ -90,25 +91,37 @@ Item {
         CircleText {
             id: daysCircle
             valueLabel: 'd'
-            isDays: true
+            showNumber: true
+            showLabel: showLabels
+            fullCircle: false
         }
         
         CircleText {
             id: hoursCircle
             valueLabel: 'h'
             circleOpacity: 0.8
+            showNumber: showNumbers
+            showLabel: showLabels
+            fullCircle: fullCircles
         }
         
         CircleText {
             id: minsCircle
             valueLabel: 'm'
             circleOpacity: 0.5
+            showNumber: showNumbers
+            showLabel: showLabels
+            fullCircle: fullCircles
         }
         
         CircleText {
             id: secsCircle
             valueLabel: 's'
             circleOpacity: 0.2
+            showNumber: showSecondsNumber
+            showLabel: showSecondsNumber && showLabels
+            fullCircle: fullCircles
+            visible: enableSeconds
         }
     }
     
