@@ -29,7 +29,7 @@ Item {
     property double widgetHeight: widgetWidth / numberOfParts
     
     property double partSize: squareLayout ? widgetHeight / 2 : widgetHeight
-    property double seconds
+    property int seconds
     
     Layout.preferredWidth: widgetWidth
     Layout.preferredHeight: widgetHeight
@@ -38,6 +38,9 @@ Item {
     property double fontPointSize: partSize * 0.4
     
     property bool mouseIn: false
+    
+    Plasmoid.toolTipMainText: 'Uptime'
+    Plasmoid.toolTipSubText: daysCircle.numberValue + ' days, ' + hoursCircle.numberValue + ':' + minsCircle.numberValue
     
     onFullCirclesChanged: {
         repaint()

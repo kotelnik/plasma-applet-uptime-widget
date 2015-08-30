@@ -26,7 +26,10 @@ Item {
     
     property bool vertical: (plasmoid.formFactor == PlasmaCore.Types.Vertical)
     
-    property bool squareLayout: plasmoid.configuration.squareLayout
+    property bool inTray: (plasmoid.parent === null)
+    property bool isInTray: false
+    
+    property bool squareLayout: isInTray || plasmoid.configuration.squareLayout
     
     property bool fullCirclesSetting: plasmoid.configuration.fullCircles
     property bool showLabels: plasmoid.configuration.showLabels
@@ -35,7 +38,7 @@ Item {
     property bool enableSeconds: plasmoid.configuration.enableSeconds
     property bool showSecondsNumber: plasmoid.configuration.showSecondsNumber
     
-    property double secondsValue: 0
+    property int secondsValue: 0
     
     property Component cr: CompactRepresentation {
         seconds: secondsValue
@@ -44,11 +47,18 @@ Item {
     
     Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
     Plasmoid.compactRepresentation: cr
-    Plasmoid.fullRepresentation: cr
+    
+    Component.onCompleted: {
+        if (inTray) {
+            isInTray = true
+        } else {
+            Plasmoid.fullRepresentation = cr
+        }
+    }
     
     PlasmaCore.DataSource {
         id: dataSource
-        engine: "systemmonitor"
+        engine: 'systemmonitor'
 
         connectedSources: [ 'system/uptime' ]
         
