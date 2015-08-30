@@ -39,16 +39,11 @@ Item {
     
     property bool mouseIn: false
     
-    Component.onCompleted: {
-        print('uptime width: ' + widgetWidth + ', height: '+ widgetHeight + ', partSize: ' + partSize)
-    }
-    
     onFullCirclesChanged: {
         repaint()
     }
     
     onSecondsChanged: {
-        print('changed: ' + seconds)
         var secs = seconds
         var mins = 0
         if (secs >= 60) {
@@ -141,7 +136,6 @@ Item {
     }
     
     function repaint() {
-        print('repainting')
         hoursCircle.repaint()
         minsCircle.repaint()
         secsCircle.repaint()

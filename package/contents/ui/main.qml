@@ -58,9 +58,6 @@ Item {
             }
             if (sourceName === 'system/uptime') {
                 var seconds = Math.round(data.value)
-                
-                print('determined uptime seconds: ' + seconds)
-                
                 secondsValue = seconds
             }
         }

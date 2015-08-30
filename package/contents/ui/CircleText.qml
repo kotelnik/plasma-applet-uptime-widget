@@ -42,7 +42,6 @@ Item {
     height: partSize
 
     onProportionChanged: {
-        print(valueLabel + ' proportion changed to: ' + proportion)
         repaint()
     }
     
