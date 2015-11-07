@@ -25,7 +25,6 @@ Item {
     anchors.fill: parent
     
     property bool vertical: (plasmoid.formFactor == PlasmaCore.Types.Vertical)
-    //TODO repair behaviour of the desktop widget
     property bool planar: (plasmoid.formFactor == PlasmaCore.Types.Planar)
     
     property bool inTray: (plasmoid.parent === null || plasmoid.parent.objectName === 'taskItemContainer')

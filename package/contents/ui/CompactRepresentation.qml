@@ -21,14 +21,38 @@ import QtQuick.Controls 1.3
 
 Item {
     id: compactRepresentation
-
+    
     property bool daysFullCircle
     property bool hoursFullCircle
     property bool minutesFullCircle
     
+    property double parentWidth: parent.width
+    property double parentHeight: parent.height
+    
     property double numberOfParts: squareLayout ? 1 : (0 + (enableDays ? 1 : 0) + (enableHours ? 1 : 0) + (enableMinutes ? 1 : 0) + (enableSeconds ? 1 : 0))
-    property double widgetWidth:  parent === null ? 0 : (vertical ? parent.width : parent.height * numberOfParts)
+    property double ratio: numberOfParts
+    property double widgetWidth:  0
     property double widgetHeight: widgetWidth / numberOfParts
+    
+    onParentWidthChanged: setWidgetSize()
+    onParentHeightChanged: setWidgetSize()
+    
+    onRatioChanged: setWidgetSize()
+    
+    function setWidgetSize() {
+        if (!parentHeight) {
+            return
+        }
+        var restrictToWidth = false
+        if (planar) {
+            restrictToWidth = (parentWidth / parentHeight) < ratio
+        } else if (vertical) {
+            restrictToWidth = true
+        }
+        widgetWidth = restrictToWidth ? parent.width : parent.height * numberOfParts
+    }
+    
+    Component.onCompleted: setWidgetSize()
     
     property double partSize: squareLayout ? widgetHeight / 2 : widgetHeight
     property int seconds
@@ -83,6 +107,8 @@ Item {
         
         Layout.preferredWidth: widgetWidth
         Layout.preferredHeight: widgetHeight
+        
+        anchors.centerIn: parent
         
         columns: squareLayout ? 2 : 4
         columnSpacing: 0
