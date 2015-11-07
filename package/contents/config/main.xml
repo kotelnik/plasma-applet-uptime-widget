@@ -10,20 +10,55 @@
             <default>false</default>
         </entry>
         
-        <entry name="fullCircles" type="Bool">
+        <entry name="enableDays" type="Bool">
             <default>true</default>
         </entry>
-        <entry name="showNumbers" type="Bool">
+        <entry name="daysFullCircle" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="daysShowNumber" type="Bool">
             <default>false</default>
         </entry>
-        <entry name="showLabels" type="Bool">
+        <entry name="daysShowLabel" type="Bool">
+            <default>false</default>
+        </entry>
+        
+        <entry name="enableHours" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="hoursFullCircle" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="hoursShowNumber" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="hoursShowLabel" type="Bool">
+            <default>false</default>
+        </entry>
+        
+        <entry name="enableMinutes" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="minutesFullCircle" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="minutesShowNumber" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="minutesShowLabel" type="Bool">
             <default>false</default>
         </entry>
         
         <entry name="enableSeconds" type="Bool">
             <default>true</default>
         </entry>
-        <entry name="showSecondsNumber" type="Bool">
+        <entry name="secondsFullCircle" type="Bool">
+            <default>true</default>
+        </entry>
+        <entry name="secondsShowNumber" type="Bool">
+            <default>false</default>
+        </entry>
+        <entry name="secondsShowLabel" type="Bool">
             <default>false</default>
         </entry>
     </group>

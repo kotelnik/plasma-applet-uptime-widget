@@ -22,9 +22,12 @@ import QtQuick.Controls 1.3
 Item {
     id: compactRepresentation
 
-    property bool fullCircles
+    property bool daysFullCircle
+    property bool hoursFullCircle
+    property bool minutesFullCircle
+    property bool secondsFullCircle
     
-    property double numberOfParts: squareLayout ? 1 : enableSeconds ? 4 : 3
+    property double numberOfParts: squareLayout ? 1 : (0 + (enableDays ? 1 : 0) + (enableHours ? 1 : 0) + (enableMinutes ? 1 : 0) + (enableSeconds ? 1 : 0))
     property double widgetWidth:  parent === null ? 0 : (vertical ? parent.width : parent.height * numberOfParts)
     property double widgetHeight: widgetWidth / numberOfParts
     
@@ -39,12 +42,13 @@ Item {
     
     property bool mouseIn: false
     
-    Plasmoid.toolTipMainText: 'Uptime'
-    Plasmoid.toolTipSubText: daysCircle.numberValue + ' days, ' + hoursCircle.numberValue + ':' + minsCircle.numberValue
+    Plasmoid.toolTipMainText: i18n('Uptime')
+    Plasmoid.toolTipSubText: daysCircle.numberValue + ' days, ' + hoursCircle.numberValue + ':' + (minsCircle.numberValue >= 10 ? minsCircle.numberValue : '0' + minsCircle.numberValue)
     
-    onFullCirclesChanged: {
-        repaint()
-    }
+    onDaysFullCircleChanged: repaint()
+    onHoursFullCircleChanged: repaint()
+    onMinutesFullCircleChanged: repaint()
+    onSecondsFullCircleChanged: repaint()
     
     onSecondsChanged: {
         var secs = seconds
@@ -89,36 +93,39 @@ Item {
         CircleText {
             id: daysCircle
             valueLabel: 'd'
-            showNumber: true
-            showLabel: showLabels
-            fullCircle: false
+            fullCircle: daysFullCircle
+            showNumber: daysShowNumber
+            showLabel: daysShowLabel
+            visible: enableDays
         }
         
         CircleText {
             id: hoursCircle
             valueLabel: 'h'
             circleOpacity: 0.8
-            showNumber: showNumbers
-            showLabel: showLabels
-            fullCircle: fullCircles
+            fullCircle: hoursFullCircle
+            showNumber: hoursShowNumber
+            showLabel: hoursShowLabel
+            visible: enableHours
         }
         
         CircleText {
             id: minsCircle
             valueLabel: 'm'
             circleOpacity: 0.5
-            showNumber: showNumbers
-            showLabel: showLabels
-            fullCircle: fullCircles
+            fullCircle: minutesFullCircle
+            showNumber: minutesShowNumber
+            showLabel: minutesShowLabel
+            visible: enableMinutes
         }
         
         CircleText {
             id: secsCircle
             valueLabel: 's'
             circleOpacity: 0.2
-            showNumber: showSecondsNumber
-            showLabel: showSecondsNumber && showLabels
-            fullCircle: fullCircles
+            fullCircle: secondsFullCircle
+            showNumber: secondsShowNumber
+            showLabel: secondsShowLabel
             visible: enableSeconds
         }
     }
@@ -139,6 +146,7 @@ Item {
     }
     
     function repaint() {
+        daysCircle.repaint()
         hoursCircle.repaint()
         minsCircle.repaint()
         secsCircle.repaint()

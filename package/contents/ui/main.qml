@@ -25,33 +25,48 @@ Item {
     anchors.fill: parent
     
     property bool vertical: (plasmoid.formFactor == PlasmaCore.Types.Vertical)
+    //TODO repair behaviour of the desktop widget
+    property bool planar: (plasmoid.formFactor == PlasmaCore.Types.Planar)
     
-    property bool inTray: (plasmoid.parent === null)
-    property bool isInTray: false
+    property bool inTray: (plasmoid.parent === null || plasmoid.parent.objectName === 'taskItemContainer')
     
-    property bool squareLayout: isInTray || plasmoid.configuration.squareLayout
+    property bool squareLayout: inTray || plasmoid.configuration.squareLayout
     
-    property bool fullCirclesSetting: plasmoid.configuration.fullCircles
-    property bool showLabels: plasmoid.configuration.showLabels
-    property bool showNumbers: plasmoid.configuration.showNumbers
+    property bool enableDays: plasmoid.configuration.enableDays
+    property bool daysFullCircleSetting: plasmoid.configuration.daysFullCircle
+    property bool daysShowNumber: plasmoid.configuration.daysShowNumber
+    property bool daysShowLabel: plasmoid.configuration.daysShowLabel
+    
+    property bool enableHours: plasmoid.configuration.enableHours
+    property bool hoursFullCircleSetting: plasmoid.configuration.hoursFullCircle
+    property bool hoursShowNumber: plasmoid.configuration.hoursShowNumber
+    property bool hoursShowLabel: plasmoid.configuration.hoursShowLabel
+    
+    property bool enableMinutes: plasmoid.configuration.enableMinutes
+    property bool minutesFullCircleSetting: plasmoid.configuration.minutesFullCircle
+    property bool minutesShowNumber: plasmoid.configuration.minutesShowNumber
+    property bool minutesShowLabel: plasmoid.configuration.minutesShowLabel
     
     property bool enableSeconds: plasmoid.configuration.enableSeconds
-    property bool showSecondsNumber: plasmoid.configuration.showSecondsNumber
+    property bool secondsFullCircleSetting: plasmoid.configuration.secondsFullCircle
+    property bool secondsShowNumber: plasmoid.configuration.secondsShowNumber
+    property bool secondsShowLabel: plasmoid.configuration.secondsShowLabel
     
     property int secondsValue: 0
     
     property Component cr: CompactRepresentation {
         seconds: secondsValue
-        fullCircles: fullCirclesSetting
+        daysFullCircle: daysFullCircleSetting
+        hoursFullCircle: hoursFullCircleSetting
+        minutesFullCircle: minutesFullCircleSetting
+        secondsFullCircle: secondsFullCircleSetting
     }
     
     Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
     Plasmoid.compactRepresentation: cr
     
     Component.onCompleted: {
-        if (inTray) {
-            isInTray = true
-        } else {
+        if (!inTray) {
             Plasmoid.fullRepresentation = cr
         }
     }
