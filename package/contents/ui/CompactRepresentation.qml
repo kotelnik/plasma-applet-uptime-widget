@@ -25,7 +25,6 @@ Item {
     property bool daysFullCircle
     property bool hoursFullCircle
     property bool minutesFullCircle
-    property bool secondsFullCircle
     
     property double numberOfParts: squareLayout ? 1 : (0 + (enableDays ? 1 : 0) + (enableHours ? 1 : 0) + (enableMinutes ? 1 : 0) + (enableSeconds ? 1 : 0))
     property double widgetWidth:  parent === null ? 0 : (vertical ? parent.width : parent.height * numberOfParts)
@@ -45,10 +44,9 @@ Item {
     Plasmoid.toolTipMainText: i18n('Uptime')
     Plasmoid.toolTipSubText: daysCircle.numberValue + ' days, ' + hoursCircle.numberValue + ':' + (minsCircle.numberValue >= 10 ? minsCircle.numberValue : '0' + minsCircle.numberValue)
     
-    onDaysFullCircleChanged: repaint()
-    onHoursFullCircleChanged: repaint()
-    onMinutesFullCircleChanged: repaint()
-    onSecondsFullCircleChanged: repaint()
+    onDaysFullCircleChanged: daysCircle.repaint()
+    onHoursFullCircleChanged: hoursCircle.repaint()
+    onMinutesFullCircleChanged: minsCircle.repaint()
     
     onSecondsChanged: {
         var secs = seconds
@@ -143,13 +141,6 @@ Item {
         onExited: {
             mouseIn = false
         }
-    }
-    
-    function repaint() {
-        daysCircle.repaint()
-        hoursCircle.repaint()
-        minsCircle.repaint()
-        secsCircle.repaint()
     }
     
 }

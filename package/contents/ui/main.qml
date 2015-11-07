@@ -48,7 +48,7 @@ Item {
     property bool minutesShowLabel: plasmoid.configuration.minutesShowLabel
     
     property bool enableSeconds: plasmoid.configuration.enableSeconds
-    property bool secondsFullCircleSetting: plasmoid.configuration.secondsFullCircle
+    property bool secondsFullCircle: plasmoid.configuration.secondsFullCircle
     property bool secondsShowNumber: plasmoid.configuration.secondsShowNumber
     property bool secondsShowLabel: plasmoid.configuration.secondsShowLabel
     
@@ -59,7 +59,6 @@ Item {
         daysFullCircle: daysFullCircleSetting
         hoursFullCircle: hoursFullCircleSetting
         minutesFullCircle: minutesFullCircleSetting
-        secondsFullCircle: secondsFullCircleSetting
     }
     
     Plasmoid.preferredRepresentation: Plasmoid.compactRepresentation
