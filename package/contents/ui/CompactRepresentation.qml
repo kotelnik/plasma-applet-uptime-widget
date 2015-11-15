@@ -61,7 +61,7 @@ Item {
     Layout.preferredHeight: widgetHeight
     Layout.maximumHeight: widgetHeight
     
-    property double fontPointSize: partSize * 0.4
+    property double fontPixelSize: partSize * 0.55
     
     property bool mouseIn: false
     
