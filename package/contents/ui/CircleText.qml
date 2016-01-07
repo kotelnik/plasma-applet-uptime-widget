@@ -88,6 +88,7 @@ Item {
         anchors.centerIn: parent
         text: numberValue
         font.pixelSize: fontPixelSize
+        font.pointSize: -1
         color: theme.textColor
         visible: showNumber || mouseIn
     }
@@ -110,6 +111,7 @@ Item {
         anchors.right: parent.right
         text: valueLabel
         font.pixelSize: fontPixelSize * 0.65
+        font.pointSize: -1
         color: theme.textColor
         visible: showLabel || mouseIn
     }
