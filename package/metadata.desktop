@@ -1,7 +1,15 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=Uptime Widget
+Name[sr]=Време рада
+Name[sr@ijekavian]=Вријеме рада
+Name[sr@ijekavianlatin]=Vrijeme rada
+Name[sr@latin]=Vreme rada
 Comment=Plasmoid for viewing uptime.
+Comment[sr]=Плазмоид за приказ времена рада.
+Comment[sr@ijekavian]=Плазмоид за приказ времена рада.
+Comment[sr@ijekavianlatin]=Plazmoid za prikaz vremena rada.
+Comment[sr@latin]=Plazmoid za prikaz vremena rada.
 Type=Service
 X-KDE-ParentApp=
 X-KDE-PluginInfo-Author=Kotelnik
